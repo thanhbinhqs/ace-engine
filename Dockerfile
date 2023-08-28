@@ -16,11 +16,8 @@ RUN curl --progress-bar $BASE_URL/acestream_$ACE_VERSION.tar.gz | tar xzf -;\
     ln -sf /dev/stderr /var/log/nginx/error.log;             \
     ln -sf /dev/stdout /var/log/nginx/access.log;            \
     chown -R ace . /etc/nginx /var/lib/nginx /var/log/nginx; \
-    pip install --no-cache-dir gunicorn flask;
-COPY default.conf /etc/nginx/sites-available/default
-
-
-CMD mkdir /dev/shm/.ACEStream;                 \
+    pip install --no-cache-dir gunicorn flask; \
+    mkdir /dev/shm/.ACEStream;                 \
     ln -s /dev/shm/.ACEStream .ACEStream;      \
     ./start-engine                             \
         --client-console                       \
@@ -39,3 +36,6 @@ CMD mkdir /dev/shm/.ACEStream;                 \
     ./start-engine                             \
         --client-console                       \
         --live-cache-type memory
+COPY default.conf /etc/nginx/sites-available/default
+
+
